@@ -9,7 +9,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
+
 public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
@@ -20,11 +20,13 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @Transactional
     public List<Role> findAllRole() {
         return roleRepository.findAllRole();
     }
 
     @Override
+    @Transactional
     public Role getRoleByName(String roleName) {
         return roleRepository.getRoleByName(roleName);
     }

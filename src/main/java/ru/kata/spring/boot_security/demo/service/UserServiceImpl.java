@@ -11,7 +11,6 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 import java.util.List;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -22,22 +21,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Autowired
+    @Transactional
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Override
+    @Transactional
     public void createUser(User user) {
         user.setPassword(passwordEncoder().encode(user.getPassword()));
         userRepository.createUser(user);
     }
 
     @Override
+    @Transactional
     public void deleteUser(Long id) {
         userRepository.deleteUser(id);
     }
 
     @Override
+    @Transactional
     public void updateUser(User user) {
         boolean passwordIsNotChanged = userRepository.readUser(user.getId()).getPassword().equals(user.getPassword());
         if (!passwordIsNotChanged) {
