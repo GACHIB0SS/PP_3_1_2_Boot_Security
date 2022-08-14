@@ -1,20 +1,28 @@
-
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
 <head>
-    <title>User Data</title>
-    <form th:action="@{/logout}" method="post">
-        <button type="submit">Выйти из учетной записи </button>
-    </form>
+    <meta charset="UTF-8">
+    <title>User</title>
 </head>
-<body th:object="${user}">
-<h1>User, welcome spring boot security page!</h1>
-<p>Username:
-    <a th:text="${user.username}"></a></p>
-<p>Password:
-    <a th:text="${user.password}"></a> </p>
+<body>
 
-<p>Roles:
-    <a th:each="role : ${user.getRoles()}">[[${role.getName()}]]</a></p>
+<h1>User, welcome to spring boot security page!</h1>
+
+<table border="1" cellpadding="7">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Last name</th>
+    </tr>
+    <td th:utext="${user.getId()}">id</td>
+    <td th:utext="${user.getFirstName()}">firstName</td>
+    <td th:utext="${user.getLastName()}">lastname</td>
+
+</table>
+<br>
+
+<button class="buttonLogout" onclick="window.location.href = '/logout';">Logout</button>
+
 </body>
 </html>
