@@ -10,6 +10,8 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.List;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -20,53 +22,11 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
-    @Autowired
-    @Transactional
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     @Override
-    @Transactional
-    public void createUser(User user) {
-        user.setPassword(passwordEncoder().encode(user.getPassword()));
-        userRepository.createUser(user);
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
-    @Override
-    @Transactional
-    public void deleteUser(Long id) {
-        userRepository.deleteUser(id);
-    }
 
-    @Override
-    @Transactional
-    public void updateUser(User user) {
-        boolean passwordIsNotChanged = userRepository.readUser(user.getId()).getPassword().equals(user.getPassword());
-        if (!passwordIsNotChanged) {
-            user.setPassword(passwordEncoder().encode(user.getPassword()));
-        }
-        userRepository.updateUser(user);
-    }
-
-    @Override
-    public User readUser(Long id) {
-        return userRepository.readUser(id);
-    }
-
-    @Override
-    public List<User> readAllUsers() {
-        return userRepository.readAllUsers();
-    }
-
-    @Override
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
-
-    @Override
-    public void save(User userNew) {
-
-    }
 
 }

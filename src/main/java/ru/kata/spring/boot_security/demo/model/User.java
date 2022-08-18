@@ -124,6 +124,11 @@ public class User implements UserDetails {
         return true;
     }
 
+    public UserDetails getUserDetails() {
+        return new org.springframework.security.core.userdetails.User(getUsername(), getPassword(), isEnabled(),
+                isAccountNonExpired(), isCredentialsNonExpired(), isAccountNonLocked(), getRoles());
+    }
+
     @Override
     public String toString() {
         return "User{" +

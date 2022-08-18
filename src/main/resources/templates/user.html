@@ -15,14 +15,15 @@
         <th>Name</th>
         <th>Last name</th>
     </tr>
-    <td th:utext="${user.getId()}">id</td>
-    <td th:utext="${user.getFirstName()}">firstName</td>
-    <td th:utext="${user.getLastName()}">lastname</td>
+            <td th:text="${userToShow.get().getId()}"></td>
+            <td th:text="${userToShow.get().getName()}"></td>
+            <td th:text="${userToShow.get().getEmail()}"></td>
+            <td th:text="${userToShow.get().getAge()}"></td>
+        </tr>
+    </table>
+    <br>
 
-</table>
-<br>
-
-<button class="buttonLogout" onclick="window.location.href = '/logout';">Logout</button>
+    <button class="buttonLogout" onclick="window.location.href = '/logout';">Logout</button>
 
 </body>
 </html>

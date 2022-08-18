@@ -4,12 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
+import java.util.Optional;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
@@ -18,17 +21,15 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
-    @GetMapping("/user")
-    public String userPage(Model model, Principal principal) {
-        model.addAttribute("user", userService.findByUsername(principal.getName()));
-        return "user";
+    @GetMapping()
+    public String showUser(Principal principal, Model model) {
+        Optional<User> userToShow = userService.findByEmail(principal.getName());
+        if (userToShow.isPresent()) {
+            model.addAttribute("userToShow", userToShow);
+            return "user/user";
+        }
+        return "user/err";
     }
 
-    @GetMapping("/user/{id}")
-    public String showUserPageById(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("user", userService.readUser(id));
-        return "user";
-    }
 
 }
